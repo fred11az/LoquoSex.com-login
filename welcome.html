@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Panel de control &lsaquo; LOQUOSEX.COM</title>
+<meta name='robots' content='noindex, follow' />
+<style>
+  /* ============================
+     BASE
+     ============================ */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    background: #f0f0f1;
+    min-height: 100vh;
+    color: #3c434a;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ============================
+     TOP BAR (WP Admin style)
+     ============================ */
+  .admin-bar {
+    background: #1d2327;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 0 rgba(0,0,0,.15);
+  }
+
+  .admin-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .admin-bar-logo {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .admin-bar-site {
+    color: #c3c4c7;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 400;
+  }
+
+  .admin-bar-site:hover {
+    color: #72aee6;
+  }
+
+  .admin-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .admin-bar-user {
+    color: #c3c4c7;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .admin-bar-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #50575e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .btn-logout {
+    background: none;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    color: #c3c4c7;
+    font-size: 12px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .btn-logout:hover {
+    background: #d63638;
+    border-color: #d63638;
+    color: #fff;
+  }
+
+  .btn-logout:focus-visible {
+    outline: 2px solid #72aee6;
+    outline-offset: 2px;
+  }
+
+  .btn-logout svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* ============================
+     MAIN CONTENT
+     ============================ */
+  .main-content {
+    padding-top: 46px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .welcome-card {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    max-width: 540px;
+    width: 90%;
+    padding: 40px 36px;
+    text-align: center;
+    margin: 40px auto;
+  }
+
+  .welcome-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #e6f3e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .welcome-icon svg {
+    width: 32px;
+    height: 32px;
+    stroke: #00a32a;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .welcome-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1e1e1e;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .welcome-subtitle {
+    font-size: 14px;
+    color: #646970;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .welcome-user {
+    color: #2271b1;
+    font-weight: 600;
+  }
+
+  .welcome-details {
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    text-align: left;
+    font-size: 13px;
+    color: #50575e;
+  }
+
+  .welcome-details-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #e9e9e9;
+  }
+
+  .welcome-details-row:last-child {
+    border-bottom: none;
+  }
+
+  .welcome-details-label {
+    font-weight: 600;
+    color: #3c434a;
+  }
+
+  .welcome-details-value {
+    color: #646970;
+  }
+
+  .welcome-separator {
+    border: none;
+    border-top: 1px solid #dcdcde;
+    margin: 24px 0;
+  }
+
+  .btn-logout-main {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #d63638;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 28px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .btn-logout-main:hover {
+    background: #b32d2e;
+  }
+
+  .btn-logout-main:focus-visible {
+    outline: 2px solid #d63638;
+    outline-offset: 2px;
+  }
+
+  .btn-logout-main svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .security-note {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #888;
+  }
+
+  .security-note svg {
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    margin-right: 3px;
+    stroke: #888;
+    fill: none;
+  }
+
+  /* ============================
+     LOGOUT CONFIRMATION OVERLAY
+     ============================ */
+  .logout-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0,0,0,.55);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .logout-overlay.is-visible {
+    display: flex;
+  }
+
+  .logout-modal {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.25);
+    max-width: 380px;
+    width: 100%;
+    padding: 28px 24px;
+    text-align: center;
+  }
+
+  .logout-modal-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fcf0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+
+  .logout-modal-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #d63638;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .logout-modal h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e1e1e;
+    margin-bottom: 8px;
+  }
+
+  .logout-modal p {
+    font-size: 14px;
+    color: #646970;
+    margin-bottom: 20px;
+  }
+
+  .logout-modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .btn-cancel {
+    background: #f0f0f1;
+    color: #3c434a;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 8px 22px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+
+  .btn-cancel:hover {
+    background: #e0e0e0;
+  }
+
+  .btn-confirm-logout {
+    background: #d63638;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 22px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+
+  .btn-confirm-logout:hover {
+    background: #b32d2e;
+  }
+
+  /* ============================
+     RESPONSIVE
+     ============================ */
+  @media (max-width: 480px) {
+    .admin-bar {
+      padding: 0 10px;
+    }
+
+    .admin-bar-site {
+      display: none;
+    }
+
+    .welcome-card {
+      padding: 28px 20px;
+      width: 95%;
+    }
+
+    .welcome-title {
+      font-size: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============================
+       TOP ADMIN BAR
+       ============================ -->
+  <header class="admin-bar" role="banner">
+    <div class="admin-bar-left">
+      <img class="admin-bar-logo"
+           src="https://www.loquosex.com/wp-content/themes/Classifieds/images/logo2.png"
+           alt="LoquoSex.com" />
+      <a href="#" class="admin-bar-site">LOQUOSEX.COM</a>
+    </div>
+    <div class="admin-bar-right">
+      <span class="admin-bar-user">
+        <span class="admin-bar-avatar" id="userAvatar" aria-hidden="true">U</span>
+        <span id="userDisplayName">Usuario</span>
+      </span>
+      <button class="btn-logout" id="topLogoutBtn" aria-label="Cerrar sesión">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Salir
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================
+       MAIN WELCOME CONTENT
+       ============================ -->
+  <main class="main-content" role="main">
+    <div class="welcome-card">
+      <!-- Success icon -->
+      <div class="welcome-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M20 6L9 17l-5-5"/>
+        </svg>
+      </div>
+
+      <h1 class="welcome-title">¡Bienvenido a LOQUOSEX.COM!</h1>
+      <p class="welcome-subtitle">
+        Has iniciado sesión correctamente como <span class="welcome-user" id="welcomeUser">usuario</span>.<br>
+        Tu sesión está activa y segura.
+      </p>
+
+      <!-- Session details -->
+      <div class="welcome-details" role="region" aria-label="Detalles de sesión">
+        <div class="welcome-details-row">
+          <span class="welcome-details-label">Estado</span>
+          <span class="welcome-details-value" style="color:#00a32a;font-weight:600">&#9679; Conectado</span>
+        </div>
+        <div class="welcome-details-row">
+          <span class="welcome-details-label">Fecha de acceso</span>
+          <span class="welcome-details-value" id="loginDate">—</span>
+        </div>
+        <div class="welcome-details-row">
+          <span class="welcome-details-label">Hora</span>
+          <span class="welcome-details-value" id="loginTime">—</span>
+        </div>
+        <div class="welcome-details-row">
+          <span class="welcome-details-label">Sesión expira en</span>
+          <span class="welcome-details-value" id="sessionExpiry">30 minutos</span>
+        </div>
+      </div>
+
+      <hr class="welcome-separator" />
+
+      <!-- Main logout button -->
+      <button class="btn-logout-main" id="mainLogoutBtn" aria-label="Cerrar sesión de forma segura">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Cerrar sesión de forma segura
+      </button>
+
+      <p class="security-note">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        Siempre cierra sesión cuando uses un dispositivo compartido.
+      </p>
+    </div>
+  </main>
+
+  <!-- ============================
+       LOGOUT CONFIRMATION MODAL
+       ============================ -->
+  <div class="logout-overlay" id="logoutOverlay" role="dialog" aria-modal="true" aria-labelledby="logoutTitle">
+    <div class="logout-modal">
+      <div class="logout-modal-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+      </div>
+      <h3 id="logoutTitle">¿Cerrar sesión?</h3>
+      <p>Se cerrará tu sesión actual de forma segura. Tendrás que volver a iniciar sesión.</p>
+      <div class="logout-modal-actions">
+        <button class="btn-cancel" id="cancelLogout">Cancelar</button>
+        <button class="btn-confirm-logout" id="confirmLogout">Sí, cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================
+       JAVASCRIPT
+       ============================ -->
+  <script>
+    (function () {
+      "use strict";
+
+      /* ---- Security: redirect to login if no session ---- */
+      var sessionUser = sessionStorage.getItem("lqs_user");
+      if (!sessionUser) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      /* ---- Populate user info ---- */
+      var displayName = sessionUser;
+      var initial = displayName.charAt(0).toUpperCase();
+      document.getElementById("userAvatar").textContent = initial;
+      document.getElementById("userDisplayName").textContent = displayName;
+      document.getElementById("welcomeUser").textContent = displayName;
+
+      /* ---- Session date/time ---- */
+      var now = new Date();
+      var months = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+      document.getElementById("loginDate").textContent =
+        now.getDate() + " de " + months[now.getMonth()] + " de " + now.getFullYear();
+      document.getElementById("loginTime").textContent =
+        String(now.getHours()).padStart(2, "0") + ":" +
+        String(now.getMinutes()).padStart(2, "0") + ":" +
+        String(now.getSeconds()).padStart(2, "0");
+
+      /* ---- Session expiry countdown ---- */
+      var expiryMinutes = 30;
+      var expiryEl = document.getElementById("sessionExpiry");
+      var expiryEnd = Date.now() + expiryMinutes * 60 * 1000;
+
+      setInterval(function () {
+        var remaining = Math.max(0, expiryEnd - Date.now());
+        var mins = Math.floor(remaining / 60000);
+        var secs = Math.floor((remaining % 60000) / 1000);
+        expiryEl.textContent = mins + " min " + String(secs).padStart(2, "0") + " seg";
+        if (remaining <= 0) {
+          doLogout();
+        }
+      }, 1000);
+
+      /* ---- Logout with confirmation ---- */
+      var overlay = document.getElementById("logoutOverlay");
+      var cancelBtn = document.getElementById("cancelLogout");
+      var confirmBtn = document.getElementById("confirmLogout");
+      var topLogoutBtn = document.getElementById("topLogoutBtn");
+      var mainLogoutBtn = document.getElementById("mainLogoutBtn");
+
+      function showLogoutModal() {
+        overlay.classList.add("is-visible");
+        confirmBtn.focus();
+      }
+
+      function hideLogoutModal() {
+        overlay.classList.remove("is-visible");
+      }
+
+      function doLogout() {
+        sessionStorage.removeItem("lqs_user");
+        window.location.href = "index.html";
+      }
+
+      topLogoutBtn.addEventListener("click", showLogoutModal);
+      mainLogoutBtn.addEventListener("click", showLogoutModal);
+      cancelBtn.addEventListener("click", hideLogoutModal);
+      confirmBtn.addEventListener("click", doLogout);
+
+      /* Close modal on Escape */
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && overlay.classList.contains("is-visible")) {
+          hideLogoutModal();
+        }
+      });
+
+      /* Close modal on overlay click */
+      overlay.addEventListener("click", function (e) {
+        if (e.target === overlay) {
+          hideLogoutModal();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

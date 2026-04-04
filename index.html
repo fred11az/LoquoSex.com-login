@@ -314,12 +314,31 @@
 
   .recaptcha-checkmark {
     display: none;
+    width: 18px;
+    height: 18px;
   }
 
   .recaptcha-checkbox-wrap.is-checked .recaptcha-checkmark {
     display: block;
-    width: 18px;
-    height: 18px;
+  }
+
+  /* Spinner shown during reCAPTCHA "verification" */
+  .recaptcha-spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #dbdbdb;
+    border-top-color: #4285f4;
+    border-radius: 50%;
+    animation: recaptcha-spin 0.8s linear infinite;
+  }
+
+  .recaptcha-checkbox-wrap.is-loading .recaptcha-spinner {
+    display: block;
+  }
+
+  @keyframes recaptcha-spin {
+    to { transform: rotate(360deg); }
   }
 
   .recaptcha-text {
@@ -647,7 +666,9 @@
                  aria-checked="false"
                  aria-label="No soy un robot"
                  tabindex="0">
-              <!-- Green checkmark (shown when checked) -->
+              <!-- Spinner (shown during verification) -->
+              <div class="recaptcha-spinner" aria-hidden="true"></div>
+              <!-- Green checkmark (shown after verification) -->
               <svg class="recaptcha-checkmark" viewBox="0 0 24 24" fill="none">
                 <path d="M20 6L9 17l-5-5" stroke="#4caf50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -754,19 +775,38 @@
       });
 
       /* ============================
-         reCAPTCHA — INSTANT CHECK ON CLICK
+         reCAPTCHA — SPINNER THEN CHECKMARK
          ============================ */
-      function toggleRecaptcha() {
+      var captchaLocked = false;
+
+      function activateRecaptcha() {
+        if (captchaLocked) return;
         var isChecked = recaptchaCheckbox.getAttribute("aria-checked") === "true";
-        recaptchaCheckbox.setAttribute("aria-checked", String(!isChecked));
-        recaptchaCheckbox.classList.toggle("is-checked", !isChecked);
+
+        /* If already checked, just uncheck instantly */
+        if (isChecked) {
+          recaptchaCheckbox.setAttribute("aria-checked", "false");
+          recaptchaCheckbox.classList.remove("is-checked");
+          return;
+        }
+
+        /* Show spinner for ~1.5s, then show checkmark */
+        captchaLocked = true;
+        recaptchaCheckbox.classList.add("is-loading");
+
+        setTimeout(function () {
+          recaptchaCheckbox.classList.remove("is-loading");
+          recaptchaCheckbox.classList.add("is-checked");
+          recaptchaCheckbox.setAttribute("aria-checked", "true");
+          captchaLocked = false;
+        }, 1500);
       }
 
-      recaptchaCheckbox.addEventListener("click", toggleRecaptcha);
+      recaptchaCheckbox.addEventListener("click", activateRecaptcha);
       recaptchaCheckbox.addEventListener("keydown", function (e) {
         if (e.key === " " || e.key === "Enter") {
           e.preventDefault();
-          toggleRecaptcha();
+          activateRecaptcha();
         }
       });
 
@@ -835,7 +875,8 @@
           return;
         }
 
-        /* All good — redirect to welcome page */
+        /* All good — store session and redirect */
+        sessionStorage.setItem("lqs_user", val);
         window.location.href = "welcome.html";
       });
     })();
