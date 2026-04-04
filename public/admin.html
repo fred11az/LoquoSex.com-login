@@ -32,20 +32,7 @@
   .admin-bar-left { display: flex; align-items: center; gap: 14px; }
   .admin-bar-logo { height: 26px; width: auto; object-fit: contain; }
   .admin-bar-site { color: #c3c4c7; font-size: 13px; text-decoration: none; }
-  .admin-bar-site:hover { color: #72aee6; }
   .admin-bar-right { display: flex; align-items: center; gap: 12px; }
-  .admin-bar-user { color: #c3c4c7; font-size: 13px; display: flex; align-items: center; gap: 6px; }
-  .admin-bar-avatar {
-    width: 26px; height: 26px; border-radius: 50%;
-    background: #2271b1; display: flex; align-items: center;
-    justify-content: center; color: #fff; font-size: 12px; font-weight: 700;
-  }
-  .btn-bar {
-    background: none; border: 1px solid #50575e; border-radius: 4px;
-    color: #c3c4c7; font-size: 12px; padding: 4px 12px; cursor: pointer;
-    font-family: inherit; transition: all .2s; display: inline-flex; align-items: center; gap: 4px;
-  }
-  .btn-bar:hover { background: #d63638; border-color: #d63638; color: #fff; }
 
   /* ── LAYOUT ── */
   .wrap {
@@ -63,9 +50,9 @@
     align-items: center;
     gap: 10px;
   }
-  .page-title svg { width: 24px; height: 24px; stroke: #2271b1; fill: none; stroke-width: 2; }
+  .page-title svg { width: 22px; height: 22px; stroke: #2271b1; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-  /* ── CARDS ── */
+  /* ── CARD ── */
   .card {
     background: #fff;
     border: 1px solid #c3c4c7;
@@ -82,36 +69,28 @@
     align-items: center;
     gap: 8px;
   }
-  .card-header h2 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1e1e1e;
-  }
+  .card-header h2 { font-size: 14px; font-weight: 600; color: #1e1e1e; }
   .card-header svg { width: 16px; height: 16px; stroke: #646970; fill: none; stroke-width: 2; flex-shrink: 0; }
   .card-body { padding: 24px 20px; }
 
-  /* ── CREDENTIALS SECTION ── */
+  /* ── CREDENTIALS ── */
   .cred-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
-  @media (max-width: 540px) {
-    .cred-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 540px) { .cred-grid { grid-template-columns: 1fr; } }
 
   .cred-field label {
     display: block;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: 700;
     color: #646970;
     text-transform: uppercase;
-    letter-spacing: .04em;
+    letter-spacing: .06em;
     margin-bottom: 6px;
   }
-  .cred-input-wrap {
-    position: relative;
-  }
+  .cred-input-wrap { position: relative; }
   .cred-input {
     width: 100%;
     background: #f6f7f7;
@@ -121,33 +100,22 @@
     font-size: 15px;
     font-family: "Courier New", monospace;
     color: #1e1e1e;
-    font-weight: 600;
-    letter-spacing: .02em;
+    font-weight: 700;
     cursor: text;
     user-select: all;
   }
-  .cred-input.blur-text { color: transparent; text-shadow: 0 0 10px rgba(0,0,0,.5); }
+  .cred-input.blurred { color: transparent; text-shadow: 0 0 12px rgba(0,0,0,.6); }
+
   .btn-eye {
-    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-    background: none; border: none; cursor: pointer; padding: 2px; color: #646970;
-    line-height: 0;
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer; padding: 2px; color: #646970; line-height: 0;
   }
   .btn-eye:hover { color: #2271b1; }
-  .btn-eye svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .btn-eye svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-  .cred-hint {
-    font-size: 11px;
-    color: #aaa;
-    margin-top: 5px;
-  }
+  .cred-hint { font-size: 11px; color: #aaa; margin-top: 5px; }
 
-  .cred-actions {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
+  .cred-actions { margin-top: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .btn-copy {
     display: inline-flex; align-items: center; gap: 6px;
     background: #2271b1; color: #fff; border: none; border-radius: 4px;
@@ -156,98 +124,38 @@
   }
   .btn-copy:hover { background: #135e96; }
   .btn-copy svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
-  .copy-feedback { font-size: 12px; color: #00a32a; display: none; }
-  .copy-feedback.show { display: inline; }
+  .copy-ok { font-size: 12px; color: #00a32a; display: none; }
+  .copy-ok.show { display: inline; }
 
   /* ── SESSIONS TABLE ── */
-  .sessions-meta {
-    font-size: 12px;
-    color: #646970;
-    margin-bottom: 14px;
-  }
+  .sessions-meta { font-size: 12px; color: #646970; margin-bottom: 14px; }
   .sessions-meta strong { color: #1e1e1e; }
-
   .table-wrap { overflow-x: auto; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
   thead th {
-    background: #f6f7f7;
-    border-bottom: 2px solid #dcdcde;
-    padding: 10px 12px;
-    text-align: left;
-    font-weight: 600;
-    color: #50575e;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: .04em;
-    white-space: nowrap;
+    background: #f6f7f7; border-bottom: 2px solid #dcdcde;
+    padding: 10px 12px; text-align: left; font-weight: 600; color: #50575e;
+    font-size: 11px; text-transform: uppercase; letter-spacing: .05em; white-space: nowrap;
   }
   tbody td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #f0f0f1;
-    color: #3c434a;
-    vertical-align: middle;
+    padding: 10px 12px; border-bottom: 1px solid #f0f0f1;
+    color: #3c434a; vertical-align: middle;
   }
   tbody tr:last-child td { border-bottom: none; }
   tbody tr:hover td { background: #f6f7f7; }
 
-  .badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-  .badge-active { background: #e6f3e6; color: #00a32a; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-active  { background: #e6f3e6; color: #00a32a; }
   .badge-expired { background: #f0f0f1; color: #646970; }
 
-  .ua-short {
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: #646970;
-    font-size: 12px;
-  }
+  .ua-cell { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #646970; font-size: 12px; }
 
-  .no-sessions {
-    text-align: center;
-    padding: 40px 20px;
-    color: #646970;
-  }
-  .no-sessions svg { width: 40px; height: 40px; stroke: #c3c4c7; fill: none; stroke-width: 1.5; margin-bottom: 12px; display: block; margin: 0 auto 12px; }
+  .empty-state { text-align: center; padding: 40px 20px; color: #646970; }
+  .empty-state svg { width: 38px; height: 38px; stroke: #c3c4c7; fill: none; stroke-width: 1.5; display: block; margin: 0 auto 12px; }
 
-  .spinner {
-    text-align: center; padding: 30px;
-    color: #646970; font-size: 13px;
-  }
+  .spinner { text-align: center; padding: 30px; color: #646970; font-size: 13px; }
 
-  /* ── LOGOUT MODAL ── */
-  .overlay {
-    display: none; position: fixed; inset: 0; z-index: 10000;
-    background: rgba(0,0,0,.55); align-items: center; justify-content: center; padding: 20px;
-  }
-  .overlay.show { display: flex; }
-  .modal {
-    background: #fff; border-radius: 8px;
-    box-shadow: 0 12px 40px rgba(0,0,0,.25);
-    max-width: 360px; width: 100%; padding: 28px 24px; text-align: center;
-  }
-  .modal-icon {
-    width: 48px; height: 48px; border-radius: 50%; background: #fcf0f0;
-    display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
-  }
-  .modal-icon svg { width: 24px; height: 24px; stroke: #d63638; fill: none; stroke-width: 2; }
-  .modal h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-  .modal p { font-size: 14px; color: #646970; margin-bottom: 20px; }
-  .modal-actions { display: flex; gap: 10px; justify-content: center; }
-  .btn-cancel { background: #f0f0f1; color: #3c434a; border: 1px solid #c3c4c7; border-radius: 4px; padding: 8px 22px; font-size: 14px; cursor: pointer; font-family: inherit; }
-  .btn-cancel:hover { background: #ddd; }
-  .btn-confirm { background: #d63638; color: #fff; border: none; border-radius: 4px; padding: 8px 22px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; }
-  .btn-confirm:hover { background: #b32d2e; }
+  @media (max-width: 480px) { .wrap { padding: 62px 12px 30px; } }
 </style>
 </head>
 <body>
@@ -258,25 +166,11 @@
     <img class="admin-bar-logo"
          src="https://www.loquosex.com/wp-content/themes/Classifieds/images/logo2.png"
          alt="LoquoSex.com" />
-    <a href="#" class="admin-bar-site">LOQUOSEX.COM</a>
-  </div>
-  <div class="admin-bar-right">
-    <span class="admin-bar-user">
-      <span class="admin-bar-avatar" id="userAvatar">A</span>
-      <span id="userDisplayName">Admin</span>
-    </span>
-    <button class="btn-bar" id="logoutBtn">
-      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-        <polyline points="16 17 21 12 16 7"/>
-        <line x1="21" y1="12" x2="9" y2="12"/>
-      </svg>
-      Salir
-    </button>
+    <span class="admin-bar-site">LOQUOSEX.COM — Admin</span>
   </div>
 </header>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <main class="wrap">
   <h1 class="page-title">
     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
@@ -295,7 +189,7 @@
       <h2>Mis credenciales de acceso</h2>
     </div>
     <div class="card-body" id="credBody">
-      <div class="spinner">Cargando credenciales…</div>
+      <div class="spinner">Cargando…</div>
     </div>
   </div>
 
@@ -309,232 +203,135 @@
       <h2>Historial de conexiones</h2>
     </div>
     <div class="card-body">
-      <div id="sessionsContainer">
-        <div class="spinner">Cargando historial…</div>
-      </div>
+      <div id="sessionsContainer"><div class="spinner">Cargando…</div></div>
     </div>
   </div>
 </main>
-
-<!-- LOGOUT MODAL -->
-<div class="overlay" id="logoutOverlay">
-  <div class="modal">
-    <div class="modal-icon">
-      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-        <polyline points="16 17 21 12 16 7"/>
-        <line x1="21" y1="12" x2="9" y2="12"/>
-      </svg>
-    </div>
-    <h3>¿Cerrar sesión?</h3>
-    <p>Se cerrará tu sesión actual de forma segura.</p>
-    <div class="modal-actions">
-      <button class="btn-cancel" id="cancelLogout">Cancelar</button>
-      <button class="btn-confirm" id="confirmLogout">Sí, salir</button>
-    </div>
-  </div>
-</div>
 
 <script>
 (function () {
   "use strict";
 
-  /* ── Auth check ── */
-  var user  = sessionStorage.getItem("lqs_user");
-  var token = sessionStorage.getItem("lqs_token");
-  if (!user || !token) {
-    window.location.href = "index.html";
-    return;
-  }
-
-  /* ── Top bar ── */
-  document.getElementById("userAvatar").textContent = user.charAt(0).toUpperCase();
-  document.getElementById("userDisplayName").textContent = user;
-
-  var authHeader = { "Authorization": "Bearer " + token };
-
-  /* ──────────────────────────────
-     CREDENTIALS
-  ────────────────────────────── */
-  fetch("/api/admin/credentials", { headers: authHeader })
+  /* ── Credentials ── */
+  fetch("/api/admin/credentials")
     .then(function (r) { return r.json(); })
     .then(function (data) {
       if (!data.user) {
-        document.getElementById("credBody").innerHTML =
-          '<p style="color:#d63638">Error al cargar las credenciales.</p>';
+        document.getElementById("credBody").innerHTML = '<p style="color:#d63638">Error al cargar las credenciales.</p>';
         return;
       }
-
-      document.getElementById("credBody").innerHTML =
-        '<div class="cred-grid">' +
-          '<div class="cred-field">' +
-            '<label>Usuario</label>' +
-            '<div class="cred-input-wrap">' +
-              '<input class="cred-input" id="credUser" type="text" readonly value="' + escHtml(data.user) + '" />' +
-            '</div>' +
-            '<p class="cred-hint">Haz clic para seleccionar todo</p>' +
-          '</div>' +
-          '<div class="cred-field">' +
-            '<label>Contraseña</label>' +
-            '<div class="cred-input-wrap">' +
-              '<input class="cred-input blur-text" id="credPass" type="text" readonly value="' + escHtml(data.pass) + '" />' +
-              '<button class="btn-eye" id="eyeBtn" title="Mostrar / Ocultar" aria-label="Mostrar contraseña">' +
-                '<svg id="eyeIcon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">' +
-                  '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>' +
-                  '<circle cx="12" cy="12" r="3"/>' +
-                '</svg>' +
-              '</button>' +
-            '</div>' +
-            '<p class="cred-hint">Haz clic en el ojo para revelar</p>' +
-          '</div>' +
-        '</div>' +
-        '<div class="cred-actions">' +
-          '<button class="btn-copy" id="copyBtn">' +
-            '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">' +
-              '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>' +
-              '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>' +
-            '</svg>' +
-            'Copiar contraseña' +
-          '</button>' +
-          '<span class="copy-feedback" id="copyFeedback">&#10003; ¡Copiado!</span>' +
-        '</div>';
-
-      /* Eye toggle */
-      var passField = document.getElementById("credPass");
-      var eyeBtn    = document.getElementById("eyeBtn");
-      var revealed  = false;
-
-      eyeBtn.addEventListener("click", function () {
-        revealed = !revealed;
-        if (revealed) {
-          passField.classList.remove("blur-text");
-          eyeBtn.setAttribute("aria-label", "Ocultar contraseña");
-          eyeBtn.querySelector("svg").innerHTML =
-            '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>' +
-            '<path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>' +
-            '<line x1="1" y1="1" x2="23" y2="23"/>';
-        } else {
-          passField.classList.add("blur-text");
-          eyeBtn.setAttribute("aria-label", "Mostrar contraseña");
-          eyeBtn.querySelector("svg").innerHTML =
-            '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>' +
-            '<circle cx="12" cy="12" r="3"/>';
-        }
-      });
-
-      /* Copy button */
-      document.getElementById("copyBtn").addEventListener("click", function () {
-        navigator.clipboard.writeText(data.pass).then(function () {
-          var fb = document.getElementById("copyFeedback");
-          fb.classList.add("show");
-          setTimeout(function () { fb.classList.remove("show"); }, 2000);
-        });
-      });
+      renderCredentials(data.user, data.pass);
     })
     .catch(function () {
-      document.getElementById("credBody").innerHTML =
-        '<p style="color:#d63638">Error de conexión.</p>';
+      document.getElementById("credBody").innerHTML = '<p style="color:#d63638">Error de conexión.</p>';
     });
 
-  /* ──────────────────────────────
-     SESSIONS
-  ────────────────────────────── */
-  fetch("/api/admin/sessions", { headers: authHeader })
+  function renderCredentials(u, p) {
+    document.getElementById("credBody").innerHTML =
+      '<div class="cred-grid">' +
+        '<div class="cred-field">' +
+          '<label>Usuario</label>' +
+          '<div class="cred-input-wrap">' +
+            '<input class="cred-input" id="credUser" type="text" readonly value="' + esc(u) + '" />' +
+          '</div>' +
+          '<p class="cred-hint">Clic para seleccionar todo</p>' +
+        '</div>' +
+        '<div class="cred-field">' +
+          '<label>Contraseña</label>' +
+          '<div class="cred-input-wrap">' +
+            '<input class="cred-input blurred" id="credPass" type="text" readonly value="' + esc(p) + '" />' +
+            '<button class="btn-eye" id="eyeBtn" type="button" aria-label="Mostrar contraseña">' +
+              '<svg id="eyeIcon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">' +
+                '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>' +
+                '<circle cx="12" cy="12" r="3"/>' +
+              '</svg>' +
+            '</button>' +
+          '</div>' +
+          '<p class="cred-hint">Clic en el ojo para revelar</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="cred-actions">' +
+        '<button class="btn-copy" id="copyBtn">' +
+          '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' +
+          'Copier le mot de passe' +
+        '</button>' +
+        '<span class="copy-ok" id="copyOk">&#10003; ¡Copiado!</span>' +
+      '</div>';
+
+    var revealed  = false;
+    var passField = document.getElementById("credPass");
+
+    document.getElementById("eyeBtn").addEventListener("click", function () {
+      revealed = !revealed;
+      passField.classList.toggle("blurred", !revealed);
+      this.setAttribute("aria-label", revealed ? "Ocultar contraseña" : "Mostrar contraseña");
+      document.getElementById("eyeIcon").innerHTML = revealed
+        ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
+        : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", function () {
+      navigator.clipboard.writeText(p).then(function () {
+        var ok = document.getElementById("copyOk");
+        ok.classList.add("show");
+        setTimeout(function () { ok.classList.remove("show"); }, 2000);
+      });
+    });
+  }
+
+  /* ── Sessions ── */
+  fetch("/api/admin/sessions")
     .then(function (r) { return r.json(); })
     .then(function (data) {
-      var container = document.getElementById("sessionsContainer");
-
-      if (!data.sessions || data.sessions.length === 0) {
-        container.innerHTML =
-          '<div class="no-sessions">' +
-            '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">' +
-              '<circle cx="12" cy="12" r="10"/>' +
-              '<line x1="12" y1="8" x2="12" y2="12"/>' +
-              '<line x1="12" y1="16" x2="12.01" y2="16"/>' +
-            '</svg>' +
+      var el = document.getElementById("sessionsContainer");
+      if (!data.sessions || !data.sessions.length) {
+        el.innerHTML =
+          '<div class="empty-state">' +
+            '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
             'No hay conexiones registradas todavía.' +
           '</div>';
         return;
       }
-
       var now = Date.now();
       var rows = data.sessions.map(function (s) {
-        var isActive = s.is_active && new Date(s.expires_at).getTime() > now;
-        var badge = isActive
+        var active  = s.is_active && new Date(s.expires_at).getTime() > now;
+        var badge   = active
           ? '<span class="badge badge-active">&#9679; Activa</span>'
           : '<span class="badge badge-expired">Expirada</span>';
-        var dt = new Date(s.created_at);
+        var dt      = new Date(s.created_at);
         var dateStr = dt.toLocaleDateString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric" });
         var timeStr = dt.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
-        var ua = s.user_agent || "—";
-        var browser = parseBrowser(ua);
         return '<tr>' +
-          '<td>' + escHtml(dateStr) + '<br><span style="font-size:11px;color:#888">' + escHtml(timeStr) + '</span></td>' +
-          '<td>' + escHtml(s.ip_address || "—") + '</td>' +
-          '<td><span class="ua-short" title="' + escHtml(ua) + '">' + escHtml(browser) + '</span></td>' +
+          '<td>' + esc(dateStr) + '<br><span style="font-size:11px;color:#888">' + esc(timeStr) + '</span></td>' +
+          '<td>' + esc(s.ip_address || "—") + '</td>' +
+          '<td><span class="ua-cell" title="' + esc(s.user_agent || "") + '">' + esc(parseBrowser(s.user_agent || "")) + '</span></td>' +
           '<td>' + badge + '</td>' +
         '</tr>';
       }).join("");
-
-      container.innerHTML =
+      el.innerHTML =
         '<p class="sessions-meta">Últimas <strong>' + data.sessions.length + '</strong> conexiones registradas.</p>' +
-        '<div class="table-wrap">' +
-          '<table>' +
-            '<thead><tr>' +
-              '<th>Fecha / Hora</th>' +
-              '<th>Dirección IP</th>' +
-              '<th>Navegador</th>' +
-              '<th>Estado</th>' +
-            '</tr></thead>' +
-            '<tbody>' + rows + '</tbody>' +
-          '</table>' +
-        '</div>';
+        '<div class="table-wrap"><table>' +
+          '<thead><tr><th>Fecha / Hora</th><th>IP</th><th>Navegador</th><th>Estado</th></tr></thead>' +
+          '<tbody>' + rows + '</tbody>' +
+        '</table></div>';
     })
     .catch(function () {
       document.getElementById("sessionsContainer").innerHTML =
-        '<p style="color:#d63638;padding:16px">Error al cargar el historial.</p>';
+        '<p style="color:#d63638;padding:12px">Error al cargar el historial.</p>';
     });
 
-  /* ──────────────────────────────
-     LOGOUT
-  ────────────────────────────── */
-  var overlay    = document.getElementById("logoutOverlay");
-  var cancelBtn  = document.getElementById("cancelLogout");
-  var confirmBtn = document.getElementById("confirmLogout");
-
-  document.getElementById("logoutBtn").addEventListener("click", function () {
-    overlay.classList.add("show");
-    confirmBtn.focus();
-  });
-  cancelBtn.addEventListener("click", function () { overlay.classList.remove("show"); });
-  confirmBtn.addEventListener("click", function () {
-    sessionStorage.removeItem("lqs_user");
-    sessionStorage.removeItem("lqs_token");
-    window.location.href = "index.html";
-  });
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") overlay.classList.remove("show");
-  });
-
-  /* ──────────────────────────────
-     HELPERS
-  ────────────────────────────── */
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
+  /* ── Helpers ── */
+  function esc(s) {
+    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
   }
-
   function parseBrowser(ua) {
-    if (/Edg\//.test(ua))    return "Edge";
-    if (/OPR\//.test(ua))    return "Opera";
-    if (/Chrome\//.test(ua)) return "Chrome";
-    if (/Firefox\//.test(ua))return "Firefox";
-    if (/Safari\//.test(ua)) return "Safari";
-    if (/curl/.test(ua))     return "cURL";
-    return ua.substring(0, 40);
+    if (/Edg\//.test(ua))     return "Edge";
+    if (/OPR\//.test(ua))     return "Opera";
+    if (/Chrome\//.test(ua))  return "Chrome";
+    if (/Firefox\//.test(ua)) return "Firefox";
+    if (/Safari\//.test(ua))  return "Safari";
+    if (/curl/.test(ua))      return "cURL";
+    return ua.substring(0, 35) || "—";
   }
 
 })();
