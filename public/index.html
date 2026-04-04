@@ -802,7 +802,8 @@
         }, 1500);
       }
 
-      recaptchaCheckbox.addEventListener("click", activateRecaptcha);
+      /* Respond to click on the checkbox box OR the "No soy un robot" text */
+      recaptchaCheckbox.parentElement.addEventListener("click", activateRecaptcha);
       recaptchaCheckbox.addEventListener("keydown", function (e) {
         if (e.key === " " || e.key === "Enter") {
           e.preventDefault();
@@ -893,7 +894,7 @@
             /* Store session and redirect */
             sessionStorage.setItem("lqs_user", result.data.user);
             sessionStorage.setItem("lqs_token", result.data.token);
-            window.location.href = "welcome.html";
+            window.location.href = "/welcome.html";
           } else {
             showError(usernameError, result.data.error || "Error de autenticación");
             submitBtn.disabled = false;
