@@ -850,8 +850,10 @@
       }
 
       /* ============================
-         FORM SUBMISSION — accepts anything, redirects
+         FORM SUBMISSION — calls API, then redirects
          ============================ */
+      var submitBtn = document.getElementById("wp-submit");
+
       form.addEventListener("submit", function (e) {
         e.preventDefault();
 
@@ -875,9 +877,35 @@
           return;
         }
 
-        /* All good — store session and redirect */
-        sessionStorage.setItem("lqs_user", val);
-        window.location.href = "welcome.html";
+        /* Disable button while loading */
+        submitBtn.disabled = true;
+        submitBtn.value = "Verificando...";
+
+        /* Call the serverless API */
+        fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: val, password: pw })
+        })
+        .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+        .then(function (result) {
+          if (result.ok && result.data.success) {
+            /* Store session and redirect */
+            sessionStorage.setItem("lqs_user", result.data.user);
+            sessionStorage.setItem("lqs_token", result.data.token);
+            window.location.href = "welcome.html";
+          } else {
+            showError(usernameError, result.data.error || "Error de autenticación");
+            submitBtn.disabled = false;
+            submitBtn.value = "Acceder";
+          }
+        })
+        .catch(function () {
+          showError(usernameError, "Error de conexión. Inténtalo de nuevo.");
+          submitBtn.disabled = false;
+          submitBtn.value = "Acceder";
+        });
+      });
       });
     })();
   </script>
