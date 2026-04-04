@@ -402,15 +402,7 @@
       cursor: not-allowed;
     }
 
-    /* Rate-limit countdown */
-    .rate-limit-msg {
-      width: 100%;
-      text-align: center;
-      font-size: 12px;
-      color: #cc0000;
-      margin-top: 8px;
-      min-height: 18px;
-    }
+
 
     /* ============================
        LINKS UNDER THE CARD
@@ -642,8 +634,6 @@
         >Acceder</button>
       </div>
 
-      <!-- Rate-limit countdown message -->
-      <div class="rate-limit-msg" id="rateLimitMsg" role="alert" aria-live="polite"></div>
     </form>
   </main>
 
@@ -687,15 +677,10 @@
       var strengthMeter = document.getElementById("strengthMeter");
       var strengthBar = document.getElementById("strengthBar");
       var btnSubmit = document.getElementById("btnSubmit");
-      var rateLimitMsg = document.getElementById("rateLimitMsg");
       var recaptchaCheckbox = document.getElementById("recaptchaCheckbox");
       var recaptchaLabel = document.getElementById("recaptchaLabel");
 
-      /* ---- Rate limiting state ---- */
-      var failedAttempts = 0;
-      var MAX_ATTEMPTS = 3;
-      var LOCKOUT_SECONDS = 30;
-      var lockoutTimer = null;
+
 
       /* ============================
          PASSWORD VISIBILITY TOGGLE
@@ -731,31 +716,13 @@
       recaptchaLabel.addEventListener("click", toggleRecaptcha);
 
       /* ============================
-         REAL-TIME USERNAME VALIDATION
+         USERNAME VALIDATION (visual only, never blocks)
          ============================ */
       function validateUsername() {
         var val = usernameInput.value.trim();
         if (val.length === 0) {
           showError(usernameError, "");
-          return false;
-        }
-        /* If it contains '@', validate as email */
-        if (val.indexOf("@") !== -1) {
-          var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(val)) {
-            showError(usernameError, "Formato de correo electrónico no válido");
-            return false;
-          }
-        } else {
-          /* Username: at least 3 chars, alphanumeric + underscore */
-          if (val.length < 3) {
-            showError(usernameError, "El nombre de usuario debe tener al menos 3 caracteres");
-            return false;
-          }
-          if (!/^[a-zA-Z0-9_]+$/.test(val)) {
-            showError(usernameError, "Solo se permiten letras, números y guiones bajos");
-            return false;
-          }
+          return true;
         }
         showError(usernameError, "");
         return true;
@@ -810,55 +777,22 @@
         el.classList.toggle("is-visible", msg.length > 0);
       }
 
-      /* ============================
-         RATE LIMITING
-         ============================ */
-      function startLockout() {
-        var remaining = LOCKOUT_SECONDS;
-        btnSubmit.disabled = true;
-        updateCountdown(remaining);
 
-        lockoutTimer = setInterval(function () {
-          remaining--;
-          if (remaining <= 0) {
-            clearInterval(lockoutTimer);
-            lockoutTimer = null;
-            btnSubmit.disabled = false;
-            rateLimitMsg.textContent = "";
-            failedAttempts = 0;
-          } else {
-            updateCountdown(remaining);
-          }
-        }, 1000);
-      }
-
-      function updateCountdown(secs) {
-        rateLimitMsg.textContent =
-          "Demasiados intentos. Intenta de nuevo en " + secs + "s";
-      }
 
       /* ============================
-         FORM SUBMISSION
+         FORM SUBMISSION — accepts any input and redirects
          ============================ */
       form.addEventListener("submit", function (e) {
         e.preventDefault();
 
-        /* If locked out, ignore */
-        if (lockoutTimer) return;
-
-        var usernameValid = validateUsername();
         var val = usernameInput.value.trim();
         var pw = passwordInput.value;
         var captchaChecked =
           recaptchaCheckbox.getAttribute("aria-checked") === "true";
 
-        /* Basic checks */
+        /* Only check that fields are not empty */
         if (val.length === 0) {
           showError(usernameError, "Este campo es obligatorio");
-          usernameInput.focus();
-          return;
-        }
-        if (!usernameValid) {
           usernameInput.focus();
           return;
         }
@@ -868,26 +802,12 @@
           return;
         }
         if (!captchaChecked) {
-          /* Briefly highlight the captcha */
           recaptchaCheckbox.focus();
           return;
         }
 
-        /* Simulate a failed login attempt for rate-limiting demo */
-        failedAttempts++;
-        if (failedAttempts >= MAX_ATTEMPTS) {
-          startLockout();
-          return;
-        }
-
-        showError(
-          usernameError,
-          "Nombre de usuario o contraseña incorrectos (intento " +
-            failedAttempts +
-            "/" +
-            MAX_ATTEMPTS +
-            ")"
-        );
+        /* Login accepted — redirect to welcome page */
+        window.location.href = "welcome.html";
       });
     })();
   </script>
