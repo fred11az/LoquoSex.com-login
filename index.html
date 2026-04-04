@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoquoSex.com — Iniciar sesión</title>
+  <style>
+    /* ============================
+       RESET & BASE
+       ============================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #e8e8e8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 16px 40px;
+      color: #333;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ============================
+       LOGO
+       ============================ */
+    .logo {
+      text-align: center;
+      margin-bottom: 24px;
+      margin-top: 10px;
+      user-select: none;
+    }
+
+    .logo-loquo {
+      font-family: Impact, "Arial Black", "Helvetica Neue", Arial, sans-serif;
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: #1a1a1a;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    /* Stylised "O" circles */
+    .logo-o {
+      display: inline-block;
+      width: 46px;
+      height: 46px;
+      border: 7px solid #1a1a1a;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin: 0 -3px;
+      position: relative;
+      top: -4px;
+    }
+
+    .logo-sex {
+      display: block;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      font-size: 48px;
+      font-style: italic;
+      font-weight: 700;
+      color: #cc0033;
+      margin-top: -14px;
+      letter-spacing: 1px;
+    }
+
+    .logo-sex .logo-dot-com {
+      color: #1a1a1a;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    /* ============================
+       LOGIN CARD
+       ============================ */
+    .login-card {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 360px;
+      padding: 26px 24px 24px;
+    }
+
+    /* ============================
+       FORM FIELDS
+       ============================ */
+    .field-group {
+      margin-bottom: 18px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    .field-input-wrap {
+      position: relative;
+    }
+
+    .field-input {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 16px;
+      border: 1px solid #bbb;
+      border-radius: 3px;
+      outline: none;
+      transition: border-color 0.2s;
+      background: #fff;
+      color: #222;
+    }
+
+    .field-input:focus {
+      border-color: #1a6eb5;
+      box-shadow: 0 0 0 2px rgba(26, 110, 181, 0.15);
+    }
+
+    .field-input--password {
+      padding-right: 44px;
+    }
+
+    /* Password toggle button */
+    .toggle-password {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: #6688aa;
+      font-size: 18px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toggle-password:hover {
+      color: #1a6eb5;
+    }
+
+    .toggle-password:focus-visible {
+      outline: 2px solid #1a6eb5;
+      outline-offset: 2px;
+      border-radius: 3px;
+    }
+
+    /* Eye icon (SVG inline via CSS) */
+    .eye-icon,
+    .eye-off-icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .eye-off-icon {
+      display: none;
+    }
+
+    .toggle-password.is-visible .eye-icon {
+      display: none;
+    }
+
+    .toggle-password.is-visible .eye-off-icon {
+      display: block;
+    }
+
+    /* ============================
+       VALIDATION ERROR MESSAGE
+       ============================ */
+    .field-error {
+      font-size: 12px;
+      color: #cc0000;
+      margin-top: 4px;
+      min-height: 18px;
+      visibility: hidden;
+    }
+
+    .field-error.is-visible {
+      visibility: visible;
+    }
+
+    /* ============================
+       PASSWORD STRENGTH METER
+       ============================ */
+    .strength-meter {
+      height: 4px;
+      border-radius: 2px;
+      background: #e0e0e0;
+      margin-top: 6px;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .strength-meter.is-active {
+      opacity: 1;
+    }
+
+    .strength-meter-bar {
+      height: 100%;
+      width: 0;
+      border-radius: 2px;
+      transition: width 0.3s, background-color 0.3s;
+    }
+
+    .strength-meter-bar.strength-weak {
+      width: 25%;
+      background-color: #e74c3c;
+    }
+
+    .strength-meter-bar.strength-fair {
+      width: 50%;
+      background-color: #e67e22;
+    }
+
+    .strength-meter-bar.strength-good {
+      width: 75%;
+      background-color: #f1c40f;
+    }
+
+    .strength-meter-bar.strength-strong {
+      width: 100%;
+      background-color: #27ae60;
+    }
+
+    /* ============================
+       SIMULATED reCAPTCHA
+       ============================ */
+    .recaptcha-box {
+      border: 1px solid #d3d3d3;
+      border-radius: 3px;
+      background: #f9f9f9;
+      padding: 14px 12px 10px;
+      margin-bottom: 20px;
+      max-width: 220px;
+    }
+
+    .recaptcha-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .recaptcha-checkbox {
+      width: 26px;
+      height: 26px;
+      border: 2px solid #c1c1c1;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s;
+    }
+
+    .recaptcha-checkbox:hover {
+      border-color: #999;
+    }
+
+    .recaptcha-checkbox:focus-visible {
+      outline: 2px solid #1a6eb5;
+      outline-offset: 2px;
+    }
+
+    .recaptcha-checkbox.is-checked {
+      background: #fff;
+      border-color: #c1c1c1;
+    }
+
+    .recaptcha-checkmark {
+      display: none;
+      color: #4caf50;
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .recaptcha-checkbox.is-checked .recaptcha-checkmark {
+      display: block;
+    }
+
+    .recaptcha-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .recaptcha-branding {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .recaptcha-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Simulated reCAPTCHA shield icon */
+    .recaptcha-shield {
+      width: 24px;
+      height: 24px;
+      opacity: 0.5;
+    }
+
+    .recaptcha-brand-text {
+      font-size: 11px;
+      color: #888;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .recaptcha-links {
+      font-size: 9px;
+      color: #888;
+    }
+
+    .recaptcha-links a {
+      color: #888;
+      text-decoration: none;
+    }
+
+    .recaptcha-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* ============================
+       BOTTOM ROW (Remember + Submit)
+       ============================ */
+    .bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .remember-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .remember-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 1px solid #bbb;
+      border-radius: 2px;
+      cursor: pointer;
+      accent-color: #1a6eb5;
+    }
+
+    .remember-label {
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      background-color: #1a6eb5;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s, opacity 0.2s;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background-color: #155a94;
+    }
+
+    .btn-submit:focus-visible {
+      outline: 2px solid #1a6eb5;
+      outline-offset: 2px;
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    /* Rate-limit countdown */
+    .rate-limit-msg {
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      color: #cc0000;
+      margin-top: 8px;
+      min-height: 18px;
+    }
+
+    /* ============================
+       LINKS UNDER THE CARD
+       ============================ */
+    .below-card {
+      text-align: center;
+      margin-top: 22px;
+      max-width: 360px;
+      width: 100%;
+    }
+
+    .link-forgot,
+    .link-back {
+      display: block;
+      color: #1a6eb5;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .link-forgot:hover,
+    .link-back:hover {
+      text-decoration: underline;
+      color: #155a94;
+    }
+
+    .link-back {
+      color: #333;
+    }
+
+    .link-back:hover {
+      color: #1a6eb5;
+    }
+
+    /* ============================
+       LANGUAGE SELECTOR
+       ============================ */
+    .lang-selector-wrap {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .lang-icon {
+      width: 20px;
+      height: 20px;
+      opacity: 0.55;
+    }
+
+    .lang-select {
+      font-size: 14px;
+      padding: 6px 28px 6px 8px;
+      border: 1px solid #bbb;
+      border-radius: 3px;
+      background: #fff;
+      color: #333;
+      cursor: pointer;
+      appearance: auto;
+    }
+
+    .lang-select:focus-visible {
+      outline: 2px solid #1a6eb5;
+      outline-offset: 2px;
+    }
+
+    /* ============================
+       RESPONSIVE
+       ============================ */
+    @media (max-width: 400px) {
+      body {
+        padding: 12px 10px 30px;
+      }
+
+      .logo-loquo {
+        font-size: 50px;
+      }
+
+      .logo-o {
+        width: 36px;
+        height: 36px;
+        border-width: 6px;
+        top: -3px;
+      }
+
+      .logo-sex {
+        font-size: 38px;
+        margin-top: -10px;
+      }
+
+      .logo-sex .logo-dot-com {
+        font-size: 26px;
+      }
+
+      .login-card {
+        padding: 20px 16px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================
+       LOGO
+       ============================ -->
+  <div class="logo" aria-label="LoquoSex.com">
+    <span class="logo-loquo">
+      L<span class="logo-o" role="presentation"></span>QU<span class="logo-o" role="presentation"></span>
+    </span>
+    <span class="logo-sex">Sex<span class="logo-dot-com">.com</span></span>
+  </div>
+
+  <!-- ============================
+       LOGIN CARD
+       ============================ -->
+  <main class="login-card" role="main">
+    <form id="loginForm" novalidate aria-label="Formulario de inicio de sesión">
+
+      <!-- Username / email field -->
+      <div class="field-group">
+        <label class="field-label" for="username">Nombre de usuario o correo electrónico</label>
+        <div class="field-input-wrap">
+          <input
+            type="text"
+            id="username"
+            class="field-input"
+            autocomplete="username"
+            autocapitalize="none"
+            spellcheck="false"
+            aria-required="true"
+            aria-describedby="username-error"
+          >
+        </div>
+        <div class="field-error" id="username-error" role="alert" aria-live="polite"></div>
+      </div>
+
+      <!-- Password field -->
+      <div class="field-group">
+        <label class="field-label" for="password">Contraseña</label>
+        <div class="field-input-wrap">
+          <input
+            type="password"
+            id="password"
+            class="field-input field-input--password"
+            autocomplete="current-password"
+            aria-required="true"
+            aria-describedby="password-error"
+          >
+          <!-- Toggle password visibility -->
+          <button
+            type="button"
+            class="toggle-password"
+            id="togglePassword"
+            aria-label="Mostrar contraseña"
+            tabindex="0"
+          >
+            <!-- Eye open icon -->
+            <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <!-- Eye off icon -->
+            <svg class="eye-off-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+              <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/>
+              <line x1="1" y1="1" x2="23" y2="23"/>
+            </svg>
+          </button>
+        </div>
+        <!-- Password strength meter -->
+        <div class="strength-meter" id="strengthMeter" role="progressbar" aria-label="Indicador de seguridad de la contraseña" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0">
+          <div class="strength-meter-bar" id="strengthBar"></div>
+        </div>
+        <div class="field-error" id="password-error" role="alert" aria-live="polite"></div>
+      </div>
+
+      <!-- ============================
+           SIMULATED reCAPTCHA
+           ============================ -->
+      <div class="recaptcha-box" role="group" aria-label="Verificación reCAPTCHA">
+        <div class="recaptcha-top">
+          <div
+            class="recaptcha-checkbox"
+            id="recaptchaCheckbox"
+            role="checkbox"
+            aria-checked="false"
+            aria-label="Je ne suis pas un robot"
+            tabindex="0"
+          >
+            <span class="recaptcha-checkmark" aria-hidden="true">&#10004;</span>
+          </div>
+          <span class="recaptcha-label" id="recaptchaLabel">Je ne suis pas<br>un robot</span>
+        </div>
+        <div class="recaptcha-branding">
+          <div class="recaptcha-logo-wrap">
+            <!-- Simplified reCAPTCHA shield -->
+            <svg class="recaptcha-shield" viewBox="0 0 24 24" fill="#888" aria-hidden="true">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" opacity="0.4"/>
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v5.7c0 4.83-3.23 9.36-7 10.57V3.18z" opacity="0.6"/>
+            </svg>
+            <span class="recaptcha-brand-text">reCAPTCHA</span>
+          </div>
+          <span class="recaptcha-links">
+            <a href="#" tabindex="-1">Confidentialité</a> – <a href="#" tabindex="-1">Conditions</a>
+          </span>
+        </div>
+      </div>
+
+      <!-- ============================
+           BOTTOM ROW
+           ============================ -->
+      <div class="bottom-row">
+        <div class="remember-wrap">
+          <input
+            type="checkbox"
+            id="remember"
+            class="remember-checkbox"
+            aria-label="Recuérdame"
+          >
+          <label class="remember-label" for="remember">Recuérdame</label>
+        </div>
+        <button
+          type="submit"
+          class="btn-submit"
+          id="btnSubmit"
+          aria-label="Acceder"
+        >Acceder</button>
+      </div>
+
+      <!-- Rate-limit countdown message -->
+      <div class="rate-limit-msg" id="rateLimitMsg" role="alert" aria-live="polite"></div>
+    </form>
+  </main>
+
+  <!-- ============================
+       LINKS BELOW CARD
+       ============================ -->
+  <nav class="below-card" aria-label="Enlaces adicionales">
+    <a href="#" class="link-forgot">¿Has olvidado tu contraseña?</a>
+    <a href="#" class="link-back">&larr; Ir a LOQUOSEX.COM</a>
+
+    <!-- Language selector -->
+    <div class="lang-selector-wrap">
+      <svg class="lang-icon" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.5" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/>
+      </svg>
+      <select class="lang-select" id="langSelect" aria-label="Seleccionar idioma">
+        <option value="es" selected>Español</option>
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="pt">Português</option>
+        <option value="de">Deutsch</option>
+      </select>
+    </div>
+  </nav>
+
+  <!-- ============================
+       JAVASCRIPT
+       ============================ -->
+  <script>
+    (function () {
+      "use strict";
+
+      /* ---- DOM references ---- */
+      var form = document.getElementById("loginForm");
+      var usernameInput = document.getElementById("username");
+      var passwordInput = document.getElementById("password");
+      var usernameError = document.getElementById("username-error");
+      var passwordError = document.getElementById("password-error");
+      var toggleBtn = document.getElementById("togglePassword");
+      var strengthMeter = document.getElementById("strengthMeter");
+      var strengthBar = document.getElementById("strengthBar");
+      var btnSubmit = document.getElementById("btnSubmit");
+      var rateLimitMsg = document.getElementById("rateLimitMsg");
+      var recaptchaCheckbox = document.getElementById("recaptchaCheckbox");
+      var recaptchaLabel = document.getElementById("recaptchaLabel");
+
+      /* ---- Rate limiting state ---- */
+      var failedAttempts = 0;
+      var MAX_ATTEMPTS = 3;
+      var LOCKOUT_SECONDS = 30;
+      var lockoutTimer = null;
+
+      /* ============================
+         PASSWORD VISIBILITY TOGGLE
+         ============================ */
+      toggleBtn.addEventListener("click", function () {
+        var isPassword = passwordInput.type === "password";
+        passwordInput.type = isPassword ? "text" : "password";
+        toggleBtn.classList.toggle("is-visible", isPassword);
+        toggleBtn.setAttribute(
+          "aria-label",
+          isPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+        );
+        passwordInput.focus();
+      });
+
+      /* ============================
+         RECAPTCHA CHECKBOX TOGGLE
+         ============================ */
+      function toggleRecaptcha() {
+        var isChecked = recaptchaCheckbox.getAttribute("aria-checked") === "true";
+        recaptchaCheckbox.setAttribute("aria-checked", String(!isChecked));
+        recaptchaCheckbox.classList.toggle("is-checked", !isChecked);
+      }
+
+      recaptchaCheckbox.addEventListener("click", toggleRecaptcha);
+      recaptchaCheckbox.addEventListener("keydown", function (e) {
+        if (e.key === " " || e.key === "Enter") {
+          e.preventDefault();
+          toggleRecaptcha();
+        }
+      });
+
+      recaptchaLabel.addEventListener("click", toggleRecaptcha);
+
+      /* ============================
+         REAL-TIME USERNAME VALIDATION
+         ============================ */
+      function validateUsername() {
+        var val = usernameInput.value.trim();
+        if (val.length === 0) {
+          showError(usernameError, "");
+          return false;
+        }
+        /* If it contains '@', validate as email */
+        if (val.indexOf("@") !== -1) {
+          var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(val)) {
+            showError(usernameError, "Formato de correo electrónico no válido");
+            return false;
+          }
+        } else {
+          /* Username: at least 3 chars, alphanumeric + underscore */
+          if (val.length < 3) {
+            showError(usernameError, "El nombre de usuario debe tener al menos 3 caracteres");
+            return false;
+          }
+          if (!/^[a-zA-Z0-9_]+$/.test(val)) {
+            showError(usernameError, "Solo se permiten letras, números y guiones bajos");
+            return false;
+          }
+        }
+        showError(usernameError, "");
+        return true;
+      }
+
+      usernameInput.addEventListener("input", validateUsername);
+      usernameInput.addEventListener("blur", validateUsername);
+
+      /* ============================
+         PASSWORD STRENGTH METER
+         ============================ */
+      function getPasswordStrength(pw) {
+        if (pw.length === 0) return 0;
+        var score = 0;
+        if (pw.length >= 6) score++;
+        if (pw.length >= 10) score++;
+        if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
+        if (/\d/.test(pw)) score++;
+        if (/[^A-Za-z0-9]/.test(pw)) score++;
+        if (score <= 1) return 1;      /* weak */
+        if (score <= 2) return 2;      /* fair */
+        if (score <= 3) return 3;      /* good */
+        return 4;                       /* strong */
+      }
+
+      var strengthClasses = ["", "strength-weak", "strength-fair", "strength-good", "strength-strong"];
+
+      passwordInput.addEventListener("input", function () {
+        var val = passwordInput.value;
+        var level = getPasswordStrength(val);
+
+        strengthMeter.classList.toggle("is-active", val.length > 0);
+        strengthMeter.setAttribute("aria-valuenow", String(level));
+
+        /* Reset classes */
+        strengthBar.className = "strength-meter-bar";
+        if (level > 0) {
+          strengthBar.classList.add(strengthClasses[level]);
+        }
+
+        /* Clear password error while typing */
+        if (val.length > 0) {
+          showError(passwordError, "");
+        }
+      });
+
+      /* ============================
+         HELPER: show / hide error
+         ============================ */
+      function showError(el, msg) {
+        el.textContent = msg;
+        el.classList.toggle("is-visible", msg.length > 0);
+      }
+
+      /* ============================
+         RATE LIMITING
+         ============================ */
+      function startLockout() {
+        var remaining = LOCKOUT_SECONDS;
+        btnSubmit.disabled = true;
+        updateCountdown(remaining);
+
+        lockoutTimer = setInterval(function () {
+          remaining--;
+          if (remaining <= 0) {
+            clearInterval(lockoutTimer);
+            lockoutTimer = null;
+            btnSubmit.disabled = false;
+            rateLimitMsg.textContent = "";
+            failedAttempts = 0;
+          } else {
+            updateCountdown(remaining);
+          }
+        }, 1000);
+      }
+
+      function updateCountdown(secs) {
+        rateLimitMsg.textContent =
+          "Demasiados intentos. Intenta de nuevo en " + secs + "s";
+      }
+
+      /* ============================
+         FORM SUBMISSION
+         ============================ */
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        /* If locked out, ignore */
+        if (lockoutTimer) return;
+
+        var usernameValid = validateUsername();
+        var val = usernameInput.value.trim();
+        var pw = passwordInput.value;
+        var captchaChecked =
+          recaptchaCheckbox.getAttribute("aria-checked") === "true";
+
+        /* Basic checks */
+        if (val.length === 0) {
+          showError(usernameError, "Este campo es obligatorio");
+          usernameInput.focus();
+          return;
+        }
+        if (!usernameValid) {
+          usernameInput.focus();
+          return;
+        }
+        if (pw.length === 0) {
+          showError(passwordError, "Introduce tu contraseña");
+          passwordInput.focus();
+          return;
+        }
+        if (!captchaChecked) {
+          /* Briefly highlight the captcha */
+          recaptchaCheckbox.focus();
+          return;
+        }
+
+        /* Simulate a failed login attempt for rate-limiting demo */
+        failedAttempts++;
+        if (failedAttempts >= MAX_ATTEMPTS) {
+          startLockout();
+          return;
+        }
+
+        showError(
+          usernameError,
+          "Nombre de usuario o contraseña incorrectos (intento " +
+            failedAttempts +
+            "/" +
+            MAX_ATTEMPTS +
+            ")"
+        );
+      });
+    })();
+  </script>
+</body>
+</html>
