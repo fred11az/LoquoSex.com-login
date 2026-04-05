@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width" />
-<title>Acceder &lsaquo; LOQUOSEX.COM &#8212; WordPress</title>
+<title>Connexion &lsaquo; LOQUOSEX.COM</title>
 <meta name='robots' content='noindex, follow' />
 <meta name='referrer' content='strict-origin-when-cross-origin' />
 <style>
@@ -197,50 +197,6 @@
 
   .wp-hide-pw.is-visible .eye-off-icon {
     display: block;
-  }
-
-  /* ============================
-     PASSWORD STRENGTH METER
-     ============================ */
-  .strength-meter {
-    height: 4px;
-    border-radius: 2px;
-    background: #dcdcde;
-    margin-top: 6px;
-    overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .strength-meter.is-active {
-    opacity: 1;
-  }
-
-  .strength-meter-bar {
-    height: 100%;
-    width: 0;
-    border-radius: 2px;
-    transition: width 0.3s, background-color 0.3s;
-  }
-
-  .strength-meter-bar.strength-weak {
-    width: 25%;
-    background-color: #d63638;
-  }
-
-  .strength-meter-bar.strength-fair {
-    width: 50%;
-    background-color: #dba617;
-  }
-
-  .strength-meter-bar.strength-good {
-    width: 75%;
-    background-color: #f0c33c;
-  }
-
-  .strength-meter-bar.strength-strong {
-    width: 100%;
-    background-color: #00a32a;
   }
 
   /* ============================
@@ -644,13 +600,6 @@
             </svg>
           </button>
         </div>
-        <!-- Password strength meter -->
-        <div class="strength-meter" id="strengthMeter"
-             role="progressbar"
-             aria-label="Fortaleza de la contraseña"
-             aria-valuemin="0" aria-valuemax="4" aria-valuenow="0">
-          <div class="strength-meter-bar" id="strengthBar"></div>
-        </div>
         <span class="field-error" id="user_pass_error" role="alert" aria-live="polite"></span>
       </div>
 
@@ -749,8 +698,6 @@
       var usernameError = document.getElementById("user_login_error");
       var passwordError = document.getElementById("user_pass_error");
       var toggleBtn = document.getElementById("togglePassword");
-      var strengthMeter = document.getElementById("strengthMeter");
-      var strengthBar = document.getElementById("strengthBar");
       var recaptchaCheckbox = document.getElementById("recaptchaCheckbox");
 
       /* ============================
@@ -811,35 +758,8 @@
         }
       });
 
-      /* ============================
-         PASSWORD STRENGTH METER
-         ============================ */
-      function getPasswordStrength(pw) {
-        if (pw.length === 0) return 0;
-        var score = 0;
-        if (pw.length >= 6) score++;
-        if (pw.length >= 10) score++;
-        if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
-        if (/\d/.test(pw)) score++;
-        if (/[^A-Za-z0-9]/.test(pw)) score++;
-        if (score <= 1) return 1;
-        if (score <= 2) return 2;
-        if (score <= 3) return 3;
-        return 4;
-      }
-
-      var strengthClasses = ["", "strength-weak", "strength-fair", "strength-good", "strength-strong"];
-
       passwordInput.addEventListener("input", function () {
-        var val = passwordInput.value;
-        var level = getPasswordStrength(val);
-        strengthMeter.classList.toggle("is-active", val.length > 0);
-        strengthMeter.setAttribute("aria-valuenow", String(level));
-        strengthBar.className = "strength-meter-bar";
-        if (level > 0) {
-          strengthBar.classList.add(strengthClasses[level]);
-        }
-        if (val.length > 0) showError(passwordError, "");
+        if (passwordInput.value.length > 0) showError(passwordError, "");
       });
 
       /* ============================

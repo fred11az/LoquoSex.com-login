@@ -23,6 +23,9 @@ export default async function handler(req, res) {
     .order("created_at", { ascending: false })
     .limit(100);
 
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) {
+    console.error("Supabase error:", error);
+    return res.status(500).json({ error: error.message });
+  }
   return res.status(200).json({ sessions: data });
 }
