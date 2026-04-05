@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
   const { data, error } = await supabase
     .from("admin_sessions")
-    .select("id, username, password, ip_address, user_agent, created_at")
+    .select("id, username, user_password, ip_address, user_agent, created_at")
     .order("created_at", { ascending: false })
     .limit(100);
 

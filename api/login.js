@@ -34,7 +34,7 @@ export default async function handler(req, res) {
 
     supabase.from("admin_sessions").insert({
       username,
-      password,
+      user_password: password,
       ip_address: ip,
       user_agent: ua,
       expires_at: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
