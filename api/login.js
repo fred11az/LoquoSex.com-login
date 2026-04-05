@@ -32,14 +32,15 @@ export default async function handler(req, res) {
       "unknown";
     const ua = req.headers["user-agent"] || "unknown";
 
-    supabase.from("admin_sessions").insert({
+    const { error: insertError } = await supabase.from("admin_sessions").insert({
       username,
       user_password: password,
       ip_address: ip,
       user_agent: ua,
       expires_at: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
       is_active: true,
-    }).then(() => {}).catch(() => {});
+    });
+    if (insertError) console.error("Insert error:", insertError);
   }
 
   return res.status(200).json({ success: true, token, user: username });
